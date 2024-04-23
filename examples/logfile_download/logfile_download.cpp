@@ -13,6 +13,8 @@
 #include <cstring>
 #include <thread>
 
+#include <iterator>
+
 using namespace mavsdk;
 using std::chrono::seconds;
 using std::this_thread::sleep_for;
@@ -66,12 +68,18 @@ int main(int argc, char** argv)
     auto log_files = LogFiles{system.value()};
 
     auto get_entries_result = log_files.get_entries();
+
     if (get_entries_result.first == LogFiles::Result::Success) {
         bool download_failure = false;
-        for (auto entry : get_entries_result.second) {
-            std::cerr << "Got log file with ID " << entry.id << " and date " << entry.date
+        std::cerr << "Number of log files in memory: " << std::size(get_entries_result.second) << std::endl;
+        for (auto entry : get_entries_result.second) { /*Iterate entry variable in get_entries_result.second array*/
+            
+            if (entry.id < std::size(get_entries_result.second) - 1) {
+                // std::cout << "ID to Not Download : " << entry.id << std::endl;
+                continue;
+            }
+            std::cerr << "Found log file with ID " << entry.id << " and date " << entry.date
                       << std::endl;
-
             auto prom = std::promise<LogFiles::Result>{};
             auto future_result = prom.get_future();
             log_files.download_log_file_async(
@@ -84,11 +92,14 @@ int main(int argc, char** argv)
                 });
 
             auto result = future_result.get();
+
             if (result != LogFiles::Result::Success) {
                 download_failure = true;
                 std::cerr << "LogFiles::download_log_file failed: " << result << std::endl;
             }
-        }
+            std::cerr << "Finished log file download with ID " << entry.id << " and date " << entry.date
+                      << std::endl;
+        }   
         if (!download_failure && remove_log_files) {
             /*
              * If you want to be sure the log has been deleted, call get_entries again
