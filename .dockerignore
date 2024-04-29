@@ -13,3 +13,6 @@ logs/
 CMakeLists.txt.user*
 
 .DS_Store
+
+#additional files
+*.ulg
