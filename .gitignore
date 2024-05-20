@@ -29,3 +29,4 @@ mavlink-headers
 
 #additional files
 *.ulg
+*.plan

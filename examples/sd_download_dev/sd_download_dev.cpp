@@ -2,6 +2,8 @@
 Next Features
 1. Check Vehicle Status
 2. Duplicate file checking and not to Downloading
+    2.1 listing file in local directories
+    2.2 filter logic to not to download before download
 3. Dump file to folder by date
 4. Start-up script
 

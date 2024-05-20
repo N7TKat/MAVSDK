@@ -8,6 +8,10 @@
 #include <mavsdk/mavsdk.h>
 #include <mavsdk/plugins/info/info.h>
 #include <mavsdk/plugins/telemetry/telemetry.h>
+#include <mavsdk/plugins/mission/mission.h>
+#include <mavsdk/plugins/mission_raw/mission_raw.h>
+
+
 
 using namespace mavsdk;
 using namespace std::this_thread;
@@ -52,10 +56,14 @@ int main(int argc, char** argv)
     // initialize Plugin
     auto info = Info{system.value()};
     auto telemetry = mavsdk::Telemetry{system.value()};
+    auto mission_raw = MissionRaw{system.value()};
+
 
     // initialize Variable
     mavsdk::Telemetry::Position latest_position;
     bool armed_status;
+    auto prom = std::promise<void>{};
+    auto fut = prom.get_future();
 
     // setting telemetry rate
     const Telemetry::Result set_rate_result = telemetry.set_rate_position(1.0);
@@ -86,10 +94,20 @@ int main(int argc, char** argv)
         armed_status = armed;
     });
 
+    std::cout << "Start Mission Monitoring Sysytems" << std::endl;
+    mission_raw.subscribe_mission_progress([&prom](MissionRaw::MissionProgress mission_progress) {
+        std::cout << "Mission progress update: " << mission_progress.current << " / "
+                  << mission_progress.total << '\n';
+        if (mission_progress.current == mission_progress.total) {
+            prom.set_value();
+        }
+    });
+
     // works as a server and never quit
     while (true) {
-        std::cout << "Vehicle Armed Status:" << armed_status << std::endl;
-        std::cout << "Relative_Altitude: " << latest_position.relative_altitude_m << " m" << std::endl;
+        // std::cout << "Vehicle Armed Status:" << armed_status << std::endl;
+        // std::cout << "Relative_Altitude: " << latest_position.relative_altitude_m << " m" << std::endl;
+        // std::cout << "Mission status update: " << _mission_progress.current << " / " << _mission_progress.total << '\n';
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     

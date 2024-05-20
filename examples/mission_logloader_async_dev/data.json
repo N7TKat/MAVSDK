@@ -1,0 +1,81 @@
+{
+    "downloaded_time": "16.57",
+    "missionItems": [
+        {
+            "autocontinue": 1,
+            "command": 22,
+            "current": 1,
+            "frame": 6,
+            "mission_type": 0,
+            "param1": 0.0,
+            "param2": 0.0,
+            "param3": 0.0,
+            "param4": null,
+            "seq": 0,
+            "x": 473977507,
+            "y": 85456074,
+            "z": 50.0
+        },
+        {
+            "autocontinue": 1,
+            "command": 16,
+            "current": 0,
+            "frame": 6,
+            "mission_type": 0,
+            "param1": 0.0,
+            "param2": 0.0,
+            "param3": 0.0,
+            "param4": null,
+            "seq": 1,
+            "x": 473978751,
+            "y": 85444989,
+            "z": 50.0
+        },
+        {
+            "autocontinue": 1,
+            "command": 16,
+            "current": 0,
+            "frame": 6,
+            "mission_type": 0,
+            "param1": 0.0,
+            "param2": 0.0,
+            "param3": 0.0,
+            "param4": null,
+            "seq": 2,
+            "x": 473988433,
+            "y": 85449837,
+            "z": 50.0
+        },
+        {
+            "autocontinue": 1,
+            "command": 16,
+            "current": 0,
+            "frame": 6,
+            "mission_type": 0,
+            "param1": 0.0,
+            "param2": 0.0,
+            "param3": 0.0,
+            "param4": null,
+            "seq": 3,
+            "x": 473986286,
+            "y": 85462106,
+            "z": 50.0
+        },
+        {
+            "autocontinue": 1,
+            "command": 20,
+            "current": 0,
+            "frame": 2,
+            "mission_type": 0,
+            "param1": 0.0,
+            "param2": 0.0,
+            "param3": 0.0,
+            "param4": 0.0,
+            "seq": 4,
+            "x": 0,
+            "y": 0,
+            "z": 0.0
+        }
+    ],
+    "name": "Mock up name"
+}
